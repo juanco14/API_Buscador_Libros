@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/">&larr; Volver</a>
+
+        <div class="detail-card">
+            {% if book.thumbnail %}
+            <img src="{{ book.thumbnail }}" alt="Portada del libro">
+            {% endif %}
+
+            <div>
+                <h1>{{ book.title }}</h1>
+
+                <p><strong>Autores:</strong>
+                    {% if book.authors %}
+                        {{ book.authors | join(', ') }}
+                    {% else %}
+                        No disponible
+                    {% endif %}
+                </p>
+
+                <p><strong>Editorial:</strong> {{ book.publisher or 'No disponible' }}</p>
+                <p><strong>Fecha:</strong> {{ book.published_date or 'No disponible' }}</p>
+                <p><strong>Páginas:</strong> {{ book.page_count or 'No disponible' }}</p>
+                <p><strong>Categorías:</strong>
+                    {% if book.categories %}
+                        {{ book.categories | join(', ') }}
+                    {% else %}
+                        No disponible
+                    {% endif %}
+                </p>
+                <p><strong>Rating promedio:</strong> {{ book.average_rating or 'No disponible' }}</p>
+
+                <div class="description">
+                    <strong>Descripción:</strong>
+                    <p>{{ book.description or 'No disponible' }}</p>
+                </div>
+
+                {% if book.preview_link %}
+                <p><a href="{{ book.preview_link }}" target="_blank">Vista previa</a></p>
+                {% endif %}
+
+                {% if book.info_link %}
+                <p><a href="{{ book.info_link }}" target="_blank">Más información</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

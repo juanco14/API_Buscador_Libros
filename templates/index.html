@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Finder</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Buscador de Libros</h1>
+        <p>Proyecto con FastAPI + Google Books API</p>
+
+        <form action="/web/search" method="get" class="search-form">
+            <input
+                type="text"
+                name="q"
+                placeholder="Busca por título, autor o tema"
+                value="{{ query }}"
+                required
+            >
+            <button type="submit">Buscar</button>
+        </form>
+
+        <div class="grid">
+            {% for book in books %}
+            <div class="card">
+                {% if book.thumbnail %}
+                <img src="{{ book.thumbnail }}" alt="Portada del libro">
+                {% endif %}
+
+                <h3>{{ book.title }}</h3>
+
+                <p><strong>Autores:</strong>
+                    {% if book.authors %}
+                        {{ book.authors | join(', ') }}
+                    {% else %}
+                        No disponible
+                    {% endif %}
+                </p>
+
+                <p><strong>Publicado:</strong> {{ book.published_date or 'No disponible' }}</p>
+
+                <a href="/web/books/{{ book.id }}">Ver detalle</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
